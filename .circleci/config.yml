@@ -17,6 +17,10 @@ jobs:
     steps:
       - checkout
       - run: 
+          name: list pr files
+          command: |
+            git --no-pager diff --name-only FETCH_HEAD $(git merge-base FETCH_HEAD master)    
+      - run: 
           name: "Install maven"
           command: | 
             sudo apt-get update && sudo apt-get install -y maven
@@ -48,10 +52,6 @@ jobs:
             --sca-resolver ../ScaResolver \
             --sast-incremental \
             --report-format json,summaryHTML
-      - run: 
-          name: list pr files
-          command: |
-            git --no-pager diff --name-only FETCH_HEAD $(git merge-base FETCH_HEAD master)    
       - run:
           name: Post Stats to GitHub PR
           command: |         
