@@ -48,7 +48,10 @@ jobs:
             --sca-resolver ../ScaResolver \
             --sast-incremental \
             --report-format json,summaryHTML
-          
+      - run: 
+          name: list pr files
+          command: |
+            git --no-pager diff --name-only FETCH_HEAD $(git merge-base FETCH_HEAD master)    
       - run:
           name: Post Stats to GitHub PR
           command: |         
